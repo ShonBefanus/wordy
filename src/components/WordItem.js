@@ -1,10 +1,12 @@
 import React from 'react';
-class WordItem extends React.Component{
-    render({word}){
-        return(
-            <div>word</div>
-        );
+const WordItem =({word, selectedWord}) => {
+    const onWordClick = (e)=>{
+        selectedWord(word);
     };
-}
-
+    return (
+            <div className="item" onClick={onWordClick}>
+                {word}
+            </div>
+        );
+};
 export default WordItem;

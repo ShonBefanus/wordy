@@ -1,8 +1,13 @@
 import words from './wordsSorted.json';
 
 export const searchWords = async (word) => {
-    return words.map((w)=> w.indexOf(word)===0);
+    const result = [];
+    words.forEach(w=>{
+        if (w.indexOf(word)===0) result.push(w);
+    });
+    return result;
 };
+
 
 
 

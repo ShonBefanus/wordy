@@ -14,17 +14,20 @@ class SearchBar extends React.Component{
     render(){
         return(
           <div className="search-bar ui segment">
+
               <form
                   className="ui form"
                   onSubmit={this.onFormSubmit}
               >
                   <div className="field">
-                      <label>Word Search</label>
-                    <input type="text"
+
+                    <input type="text" className="prompt" placeholder="Search words..."
                            value={this.state.term}
                            onChange={this.onInputChange}
                     />
-                  </div>
+                      </div>
+
+
               </form>
           </div>
         );
