@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Reset = ({isActive, onClick}) => {
+const ResetButton = ({isActive, onClick}) => {
     return (
         <button
-            className="ui right floated button  reset "
+            className={`ui inverted brown right floated button  ${isActive? 'active':'disabled'}  reset `}
             style={{display: `${isActive} ? 'block': 'none'`}}
             onClick={onClick}
         >Reset
@@ -11,4 +11,4 @@ const Reset = ({isActive, onClick}) => {
     );
 };
 
-export default Reset;
+export default ResetButton;

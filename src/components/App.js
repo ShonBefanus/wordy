@@ -5,7 +5,7 @@ import './App.css';
 import {searchWords} from '../ressources/helper';
 import EntreeComponent from './EntreeComponent';
 import solution from '../ressources/solution';
-import Reset from './Reset';
+import ResetButton from './ResetButton';
 
 class App extends React.Component {
     state = {
@@ -27,7 +27,7 @@ class App extends React.Component {
         //         console.log(favorite);
         //         this.setState({
         //             favorite,
-        //             entrees: favorite.map(word => {
+        //             entries: favorite.map(word => {
         //                 return {
         //                     word,
         //                     hint: [0, 0, 0, 0, 0]
@@ -97,6 +97,7 @@ class App extends React.Component {
     };
 
     onFavoriteClick = (id) => {
+        console.log(this);
         const word = this.state.entries[id].word;
         const favorite = this.state.favorite;
         const isFavorite = favorite.indexOf(word) !== -1;
@@ -106,17 +107,17 @@ class App extends React.Component {
         } else {
             newFavorite =  [...favorite, word];
         }
-        const newEntrees = [...this.state.entrees];
-        newEntrees[id].isFavorite = !isFavorite;
+        const newEntries = [...this.state.entries];
+        newEntries[id].isFavorite = !isFavorite;
         this.setState({
-            entrees:[...this.state.entrees,],
+            entries:newEntries,
             favorite:newFavorite
         });
     };
     onResetClick = ()=>{
         this.setState({
             start:true,
-            entrees:
+            entries:
             this.state.favorite.map(word =>{
                 return {
                     word,
@@ -126,13 +127,16 @@ class App extends React.Component {
             })
         })
     };
+    isResetActive=()=>{
+       return this.state.start || this.state.favorite.length>0;
+    };
 
     render() {
 
         return (
             <div>
-                <Reset isActive={true} onClick={this.onResetClick}/>
-                <h3 className="ui header title">Wee buddy</h3>
+                <ResetButton isActive={this.isResetActive()} onClick={this.onResetClick}/>
+                <h2 className="ui header title">Wee buddy</h2>
                 <SearchBar onSearchSubmit={this.onSearchSubmit}/>
                 <div className="ui two column grid">
                     <EntreeComponent

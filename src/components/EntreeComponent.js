@@ -1,7 +1,7 @@
 import React from 'react';
 import EraseButton from './EraseButton';
 import EntreeWord from './EntreeWord';
-import Trash from './Trash';
+import BookmarkButton from './BookmarkButton';
 
 const EntreeComponent = ({entries, deleteEntree, onFavoriteClick, setActive}) => {
     const entree = entries.map((e, index) => {
@@ -23,7 +23,7 @@ const EntreeComponent = ({entries, deleteEntree, onFavoriteClick, setActive}) =>
                             display={['inline-block', 'block']}
 
                         />
-                        <Trash
+                        <BookmarkButton
                             isActive={e.isFavorite}
                             onClick={() => onFavoriteClick(index)}
                         />

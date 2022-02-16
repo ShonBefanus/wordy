@@ -61,4 +61,22 @@ export const triage = ()=>{
     });
 };
 
-triage();
+export const createWordWeightArray = () =>{
+    const newWords=Array(words.length);
+    poids.forEach((p,i)=>{
+        newWords[i]={word:words[i],poid:p};
+    });
+    sortArray(newWords, {
+        by: 'poid',
+        order: 'desc'
+    });
+    let result = [];
+    let count1=0, count2= 0
+    newWords.forEach(({word, poid})=> {
+        result[word] = poid;
+        poid>0 ? count1++ : count2 ++;
+    } );
+    console.log(count1, count2);
+};
+
+createWordWeightArray();

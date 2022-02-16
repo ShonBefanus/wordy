@@ -3,7 +3,7 @@ import WordItem from './WordItem';
 
 const SearchedWord = ({words, selectedWord}) => {
     const renderList = words.map((word, index) => {
-        return <WordItem
+        return <WordItem color="green"
             selectedWord={selectedWord}
             key={`suggestion_${index}`} word={word}
         />

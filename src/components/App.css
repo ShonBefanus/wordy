@@ -2,10 +2,10 @@ body{
     /*background: antiquewhite;*/
 }
 .ui.header.title{
-    margin: 5px 0 0 5px;
+    margin: 5px 0 0 15px;
 }
 .ui.button.reset {
-
+    margin-right: 15px;
 }
 .entree-word{
 
@@ -29,9 +29,15 @@ body{
 .search-bar{
     background: antiquewhite;
 }
-.trash button{
-    width: 38px;
+.trash button.ui.button {
+    /*max-width: 20px;*/
+}
+.trash button.ui.button i{
+    width: 0;
     padding: 0;
+    margin: 0;
+
+
 }
 button.ui.button.searchWord{
     margin: 10px;

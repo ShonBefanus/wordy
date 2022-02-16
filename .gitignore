@@ -12,6 +12,8 @@
 /build
 .idea/
 
+/books/library
+
 # misc
 .DS_Store
 .env.local
