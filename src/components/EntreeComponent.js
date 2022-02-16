@@ -1,31 +1,36 @@
 import React from 'react';
-import Trash from './Trash';
+import EraseButton from './EraseButton';
 import EntreeWord from './EntreeWord';
+import Trash from './Trash';
 
-const EntreeComponent = ({entries, deleteEntree, setActive}) =>{
+const EntreeComponent = ({entries, deleteEntree, onFavoriteClick, setActive}) => {
     const entree = entries.map((e, index) => {
-        const onDeleteEntree = (id) => {
-            deleteEntree(id);
-        };
-        const onSetModalVisible = (flag) => {
-
-        };
 
         return (
-            <div className="item" key={`entree_${index}`}>
-                    <EntreeWord word={e.word} hint={e.hint} setActive={(letter)=>{
-                        setActive(index, letter);
-                    }}/>
-                    <span className="trash">
-                        <Trash
+            <div key={e.word} className="column">
+                <div className="ui  one column grid">
+                    <div className="column" key={`entree_${index}`}>
+                        <EntreeWord
+                            word={e.word}
+                            hint={e.hint}
+                            setActive={(letter) => { setActive(index, letter);}}
+                        />
+                        <span className="trash"
+
+                        >
+                        <EraseButton
+                            onClick={() => {deleteEntree(index)}}
                             display={['inline-block', 'block']}
-                            onClick={() => {
-                                onDeleteEntree(index);
-                                onSetModalVisible(true);
-                            }}
+
+                        />
+                        <Trash
+                            isActive={e.isFavorite}
+                            onClick={() => onFavoriteClick(index)}
                         />
                     </span>
+                    </div>
                 </div>
+            </div>
         );
     });
     return (

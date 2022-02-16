@@ -1,25 +1,32 @@
 import React from 'react';
 
-const Letter = ({letter,color,setActive}) =>{
-const setColor = (color)=>{
-    switch (color) {
-        case 0:
-            return 'black';
-        case 1:
-            return 'gold';
-        case 2:
-            return 'green';
-    }
+const Letter = ({letter, color, setActive}) => {
+    const setColor = (color) => {
+        switch (color) {
+            case 0:
+                return 'black';
+            case 1:
+                return 'gold';
+            case 2:
+                return '#02f702';
+        }
         return 'black';
-};
-
+    };
+    const onClick = (event) => {
+        event.preventDefault();
+        setActive()
+    };
+    const setCss = () => {
+        return {color: setColor(color)};
+    };
     return (
-         <span className="letter" onClick={(e)=>{
-             e.preventDefault();
-             setActive();
-         }} style={{color:setColor(color)}}>
+        <button
+            className="ui button letter"
+            onClick={onClick}
+            style={setCss()}
+        >
              {letter}
-         </span>
+        </button>
     );
 };
 

@@ -1,23 +1,38 @@
 body{
-    background: antiquewhite;
+    /*background: antiquewhite;*/
+}
+.ui.header.title{
+    margin: 5px 0 0 5px;
+}
+.ui.button.reset {
+
 }
 .entree-word{
 
 }
-.letter{
-    margin: 0 15px;
-    padding: 5px 10px;
+.ui.button {
+    border-radius: 1rem;
+}
+.ui.button.letter{
+    margin:  10px 5px;
+    padding: 8px 15px 10px;
     font-family: "Book Antiqua";
     font-min-size: 24px;
     font-size: 24px;
-    background-color: darkgrey;
+    background: #9ca4ad;
     color: black;
+
+}
+.ui.button.letter:hover{
+    background-color: #cacbcd;
 }
 .search-bar{
     background: antiquewhite;
 }
 .trash button{
-    width: 78px;
-
+    width: 38px;
+    padding: 0;
 }
-
+button.ui.button.searchWord{
+    margin: 10px;
+}

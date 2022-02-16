@@ -1,24 +1,17 @@
 import React from 'react';
-import { Trash2 } from 'react-feather';
-import Box, { Props as BoxProps } from './Box';
 
-const Trash = (props) => {
-
-  return (
-    <Box
-      as="button"
-      aria-label='delete'
-      width="100%"
-      height="100%"
-      color="grey"
-      py={2}
-      px={4}
-      css={{ '&:hover': { color: 'black' } }}
-      {...props}
-    >
-      <Trash2 size={16} css={{ margin: 'auto' }} data-automation="trash" />
-    </Box>
-  );
+const Trash = ({onClick, isActive}) => {
+    const {title, icon} = isActive? {
+      title: 'Remove from default',
+      icon: 'trash'
+    }: {
+        title: 'Add as default word',
+        icon: 'save'
+    };
+    return (
+        <button className="ui button" title={title} onClick={onClick}>
+            <i className={`${icon} icon`}/>
+        </button>
+    )
 };
-
 export default Trash;

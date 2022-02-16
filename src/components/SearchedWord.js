@@ -1,6 +1,6 @@
 import React from 'react';
 import WordItem from './WordItem';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 const SearchedWord = ({words, selectedWord}) => {
     const renderList = words.map((word, index) => {
@@ -10,8 +10,12 @@ const SearchedWord = ({words, selectedWord}) => {
         />
     });
     return (
-        <div className="ui list">
-            {renderList}
+        <div className="column">
+            <div className="ui right aligned container">
+                <div className="column">
+                    {renderList}
+                </div>
+            </div>
         </div>
     );
 };

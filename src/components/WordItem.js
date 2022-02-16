@@ -4,9 +4,9 @@ const WordItem =({word, selectedWord}) => {
         selectedWord(word);
     };
     return (
-            <div className="item" onClick={onWordClick}>
-                {word}
-            </div>
+            <button className="ui button searchWord" onClick={onWordClick}>
+                <p>{word}</p>
+            </button>
         );
 };
 export default WordItem;

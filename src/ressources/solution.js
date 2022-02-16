@@ -1,9 +1,6 @@
 import words from './wordsSorted.json';
 
-let solution = [...words];
-
-
-const removeLetter = ((letter, i, elm)=>{
+const removeLetter = (currentList, letter, i, elm)=>{
 
     let count = (elm.word.match(new RegExp(letter,'g')) || []).length;
     if (count > 1){
@@ -16,7 +13,7 @@ const removeLetter = ((letter, i, elm)=>{
     }
     const temp = [];
 
-        solution.forEach((word, index)=>{
+        currentList.forEach((word, index)=>{
 
         switch (count) {
             case 0:if(word.indexOf(letter) === -1) temp.push(word);break;
@@ -27,33 +24,43 @@ const removeLetter = ((letter, i, elm)=>{
         }
 
     });
-    solution = temp;
+    return temp;
+};
 
-});
-const trunckLetter = (letter, i ) =>{
+const trunckLetter = (currentList, letter, i ) =>{
     const temp = [];
 
-    solution.forEach((word, index)=>{
+    currentList.forEach((word, index)=>{
         if(word[i] === letter) {
            temp.push(word);
 
         }
     });
-    solution = temp;
+    return temp;
 };
 
-const filterLetter = (letter, i) => {
+const filterLetter = (currentList, letter, i) => {
     const temp = [];
-    solution.forEach((word, index)=>{
+    currentList.forEach((word, index)=>{
         if(word.indexOf(letter) !== -1 && word[i] !== letter)  temp.push(word);
     });
-    solution = temp;
+    return temp;
 };
 
-const recomendation = () => {
 
+const solution = (entree) =>{
+    let currentList = [...words];
+    entree.forEach((elm)=>{
+        elm.hint.forEach((h,i)=>{
+            switch (h) {
+                case 0: currentList = removeLetter(currentList, elm.word[i], i, elm );break;
+                case 1: currentList = filterLetter(currentList, elm.word[i], i);break;
+                case 2: currentList = trunckLetter(currentList, elm.word[i], i);break;
+            }
+        });
+    });
+    return currentList;
 };
-
 const entree = [];
 entree[0] = {
     word:'oosso',
@@ -63,15 +70,6 @@ entree[1] = {
     word:'suite',
     hint:[1,0,0,0,2]
 };
-entree.forEach((elm)=>{
-   elm.hint.forEach((h,i)=>{
-      switch (h) {
-          case 0: removeLetter(elm.word[i], i, elm );break;
-          case 1: filterLetter(elm.word[i], i);break;
-          case 2: trunckLetter(elm.word[i], i);break;
-      }
-   });
-});
-console.log('---------------------');
-console.log(solution);
-recomendation();
+
+export  default solution;
+ //console.log(solution(entree));
