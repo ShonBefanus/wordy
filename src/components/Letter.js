@@ -9,8 +9,10 @@ const Letter = ({letter, color, setActive}) => {
                 return 'gold';
             case 2:
                 return '#02f702';
+            default:
+                return 'black';
         }
-        return 'black';
+
     };
     const onClick = (event) => {
         event.preventDefault();
@@ -25,7 +27,7 @@ const Letter = ({letter, color, setActive}) => {
             onClick={onClick}
             style={setCss()}
         >
-             {letter}
+            {letter}
         </button>
     );
 };

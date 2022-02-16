@@ -13,7 +13,7 @@ const removeLetter = (currentList, letter, i, elm)=>{
     }
     const temp = [];
 
-        currentList.forEach((word, index)=>{
+        currentList.forEach((word)=>{
 
         switch (count) {
             case 0:if(word.indexOf(letter) === -1) temp.push(word);break;
@@ -21,6 +21,7 @@ const removeLetter = (currentList, letter, i, elm)=>{
             case 2:if ((word.match(new RegExp(letter,'g')) || []).length ===2) temp.push(word);break;
             case 3:if ((word.match(new RegExp(letter,'g')) || []).length ===4) temp.push(word);break;
             case 4:if ((word.match(new RegExp(letter,'g')) || []).length ===5) temp.push(word);break;
+            default:break;
         }
 
     });
@@ -30,7 +31,7 @@ const removeLetter = (currentList, letter, i, elm)=>{
 const trunckLetter = (currentList, letter, i ) =>{
     const temp = [];
 
-    currentList.forEach((word, index)=>{
+    currentList.forEach((word)=>{
         if(word[i] === letter) {
            temp.push(word);
 
@@ -41,7 +42,7 @@ const trunckLetter = (currentList, letter, i ) =>{
 
 const filterLetter = (currentList, letter, i) => {
     const temp = [];
-    currentList.forEach((word, index)=>{
+    currentList.forEach((word)=>{
         if(word.indexOf(letter) !== -1 && word[i] !== letter)  temp.push(word);
     });
     return temp;
@@ -56,6 +57,7 @@ const solution = (entree) =>{
                 case 0: currentList = removeLetter(currentList, elm.word[i], i, elm );break;
                 case 1: currentList = filterLetter(currentList, elm.word[i], i);break;
                 case 2: currentList = trunckLetter(currentList, elm.word[i], i);break;
+                default:break;
             }
         });
     });

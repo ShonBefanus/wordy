@@ -4,7 +4,7 @@ import poids from '../poid.json';
 import sortArray from 'sort-array';
 
 
-const fetch = ()=> {
+export const fetch = ()=> {
     const files = [
         './Thieves World 3 - Shadows of Sa - Asprin, Robert.txt',
         './07 - The Fire From Within - Carlos Castaneda.txt',
@@ -37,7 +37,7 @@ const fetch = ()=> {
             });
         }));
     });
-    Promise.all(promises).then((values) => {
+    Promise.all(promises).then(() => {
         console.log(poid);
         fs.writeFile(`../poid.json`, JSON.stringify(poid),()=>{
             console.log(`file "poid.json" is ready`);
@@ -45,7 +45,7 @@ const fetch = ()=> {
     });
 };
 
-const triage = ()=>{
+export const triage = ()=>{
     const newWords=Array(words.length);
     poids.forEach((p,i)=>{
         newWords[i]={word:words[i],poid:p};
