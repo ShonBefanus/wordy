@@ -1,4 +1,13 @@
 import words from './wordsSorted.json';
+import wordsByWeigth from './wordsByWeight.json';
+
+const weight1 =[];
+wordsByWeigth.forEach((e)=> {
+    const {word, poid} = e;
+
+    weight1[word] = poid;
+} );
+
 
 const removeLetter = (currentList, letter, i, elm)=>{
 
@@ -74,4 +83,5 @@ entree[1] = {
 };
 
 export  default solution;
- //console.log(solution(entree));
+
+export const weight = weight1;
