@@ -1,0 +1,1 @@
+dir | %{$x=0} {*.txt $_ -NewName $x.txt"; $x++ }
