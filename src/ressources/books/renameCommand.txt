@@ -1,1 +1,0 @@
-dir | %{$x=100} {Rename-Item $_ -NewName "$x.txt"; $x++ }
