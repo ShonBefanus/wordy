@@ -1,9 +1,9 @@
 import React from 'react';
 
-class SearchBar extends React.Component{
+class SearchBar extends React.Component {
     state = {
-        term:'',
-        debouncedTerm:''
+        term: '',
+        debouncedTerm: ''
     };
 
     timeoutId = 0;
@@ -13,13 +13,14 @@ class SearchBar extends React.Component{
         clearTimeout(this.timeoutId);
         this.props.onSearchSubmit(this.state.term);
     };
+
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevState.debouncedTerm !== this.state.debouncedTerm){
+        if (prevState.debouncedTerm !== this.state.debouncedTerm) {
             this.props.onSearchSubmit(this.state.debouncedTerm);
         }
         if (prevState.term !== this.state.term) {
             clearTimeout(this.timeoutId);
-            this.timeoutId = setTimeout(()=> {
+            this.timeoutId = setTimeout(() => {
                 this.setState({debouncedTerm: this.state.term})
             }, 500);
         }
@@ -27,29 +28,30 @@ class SearchBar extends React.Component{
     }
 
     onInputChange = (event) => {
-        this.setState({term:event.target.value});
+        this.setState({term: event.target.value.toLowerCase()});
     };
 
-    render(){
-        return(
-          <div className="search-bar ui segment">
+    render() {
+        return (
+            <div className="search-bar ui segment">
 
-              <form
-                  className="ui form"
-                  onSubmit={this.onFormSubmit}
-              >
-                  <div className="field">
+                <form
+                    className="ui form"
+                    onSubmit={this.onFormSubmit}
+                >
+                    <div className="field">
 
-                    <input type="text" className="prompt" placeholder="Search words..."
-                           value={this.state.term}
-                           onChange={this.onInputChange}
-                    />
-                      </div>
+                        <input type="text" className="prompt" placeholder="Search words..."
+                               value={this.state.term}
+                               onChange={this.onInputChange}
+                        />
+                    </div>
 
 
-              </form>
-          </div>
+                </form>
+            </div>
         );
     }
 }
+
 export default SearchBar;

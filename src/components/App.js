@@ -2,10 +2,10 @@ import React from 'react';
 import SearchBar from "./SearchBar";
 import SearchedWord from "./SearchedWord";
 import './App.css';
-//import {searchWords} from '../ressources/helper';
 import EntreeComponent from './EntreeComponent';
 import {searchWords,solution, weight} from '../ressources/solutionWithWorker';
 import ResetButton from './ResetButton';
+
 
 class App extends React.Component {
     state = {
