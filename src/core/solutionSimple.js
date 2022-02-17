@@ -41,19 +41,30 @@ const trunkLetter = (currentList, letter, i ) =>{
     return currentList.filter(e=>e[i] === letter);
 };
 
-const filterLetter = (currentList, letter, i) => {
-    return currentList.filter(word=>(word.indexOf(letter) !== -1 && word[i] !== letter));
-};
+const filterLetter = (currentList, letter, i, counter) =>
+     currentList.filter(word=>
+        word.indexOf(letter) !== -1
+        && word[i] !== letter
+        && (word.match(new RegExp(letter,'g')) || []).length >= counter
+    );
 
 
 const solution = (entree) =>{
     let currentList = [...words];
     entree.forEach((elm)=>{
+        let groups = {};
         elm.hint.forEach((h,i)=>{
+            const letter = elm.word[i];
+            if (h === 1) {
+                if (groups[letter])
+                    groups[letter] += 1;
+                else
+                    groups[letter] = 1;
+            }
             switch (h) {
-                case 0: currentList = removeLetter(currentList, elm.word[i], i, elm );break;
-                case 1: currentList = filterLetter(currentList, elm.word[i], i);break;
-                case 2: currentList = trunkLetter(currentList, elm.word[i], i);break;
+                case 0: currentList = removeLetter(currentList,letter , i, elm );break;
+                case 1: currentList = filterLetter(currentList, letter, i, groups[letter]);break;
+                case 2: currentList = trunkLetter(currentList, letter, i);break;
                 default:break;
             }
         });

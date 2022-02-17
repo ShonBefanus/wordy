@@ -3,9 +3,9 @@ import SearchBar from "./SearchBar";
 import SearchedWord from "./SearchedWord";
 import './App.css';
 import EntreeComponent from './EntreeComponent';
-import {searchWords, solution, weight,pickWord} from '../core/solutionWithWorker';
+import {searchWords, solution, weight, pickWord} from '../core/solutionWithWorker';
 import ResetButton from './ResetButton';
-//import Checkbox from './Checkbox';
+import Checkbox from './Checkbox';
 
 
 class App extends React.Component {
@@ -17,8 +17,8 @@ class App extends React.Component {
         start: false,
         favorite: [],
         entries: [],
-        isGameMode: false,
-        pickedWord:''
+        isGameMode: null,
+        pickedWord: ''
     };
 
     componentDidMount() {
@@ -26,9 +26,11 @@ class App extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.state.isGameMode){
-
-        }else{
+        if (this.state.isGameMode) {
+            if (prevState.searchedWord !== this.state.searchedWord && this.state.searchedWord.length === 1) {
+                this.gameSolution()
+            }
+        } else {
             if (prevState.entries !== this.state.entries && this.state.entries.length > 0 &&
                 this.state.start) {
                 this.solution();
@@ -38,12 +40,16 @@ class App extends React.Component {
                     this.setState({suggestedWords: words});
                 });
             }
-            if (prevState.favorite !== this.state.favorite) {
-                localStorage.setItem('favorite', this.state.favorite);
-            }
-        }
         }
 
+        if (prevState.favorite !== this.state.favorite) {
+            localStorage.setItem('favorite', this.state.favorite);
+        }
+    }
+
+    gameSolution = () => {
+
+    };
 
     onSearchSubmit = async (searchedWord) => {
         this.setState({searchedWord});
@@ -117,24 +123,24 @@ class App extends React.Component {
         return this.state.start || this.state.favorite.length > 0;
     };
 
-    onModeChange = (isGameMode) =>{
-        this.setState({isGameMode, pickedWord:pickWord()});
+    onModeChange = (isGameMode) => {
+        this.setState({isGameMode, pickedWord: pickWord()});
     };
 
     render() {
 
         return (
             <div>
-                <div className="ui divider" style={{marginTop:'10px'}}/>
-                <ResetButton isActive={this.isResetActive()} onClick={this.onResetClick}/>
-                {/*<Checkbox*/}
-                {/*    isActive={this.state.isGameMode}*/}
-                {/*    activeTitle="Game mode"*/}
-                {/*    inactiveTitle="Search mode"*/}
-                {/*    onChange={this.onModeChange}*/}
-                {/*/>*/}
+                <div className="ui divider" style={{marginTop: '10px'}}/>
+                 <ResetButton isActive={this.isResetActive()} onClick={this.onResetClick}/>
+                {this.state.isGameMode === null ? null :<Checkbox
+                    isActive={this.state.isGameMode}
+                    activeTitle="Game mode"
+                    inactiveTitle="Search mode"
+                    onChange={this.onModeChange}
+                />}
                 <h2 className="ui header title">Wee buddy</h2>
-                <div className="ui divider" />
+                <div className="ui divider"/>
                 <SearchBar
                     onSearchSubmit={this.onSearchSubmit}
                     isGameMode={this.state.isGameMode}
@@ -147,7 +153,7 @@ class App extends React.Component {
                         onFavoriteClick={this.onFavoriteClick}
                         isGameMode={this.state.isGameMode}
                     />
-                    {this.state.isGameMode?null:<SearchedWord
+                    {this.state.isGameMode ? null : <SearchedWord
                         words={this.state.suggestedWords}
                         selectedWord={this.onSelectWord}
                         weight={this.state.weight}

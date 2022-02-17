@@ -2,14 +2,14 @@ import React from 'react';
 import WordItem from './WordItem';
 
 
-const SearchedWord = ({words, selectedWord, weight, isGameMode}) => {
+const SearchedWord = ({words, selectedWord, weight}) => {
     const color = (word) =>{
         const w = weight[word];
         if(w>800) return 'green';
         if(w>500) return 'violet';
         if(w>300) return 'purple';
         if(w>200) return 'teal';
-        if(w>50) return 'brown';
+        if(w>25) return 'brown';
         return 'lightgrey';
     };
 

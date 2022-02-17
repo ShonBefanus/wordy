@@ -14,13 +14,16 @@ const getWorker = (() => {
 
 const callWorker = async (method, entree) =>
     new Promise(resolve => {
+
         const worker = getWorker();
         if (worker) {
+            //console.log('call worker');
             worker.onmessage = ((result) => {
                 resolve(result.data);
             });
             worker.postMessage([method, entree, words]);
         } else {
+            //console.log('without worker');
             switch (method) {
                 case 'searchWords':
                     resolve(searchWords1(entree));
