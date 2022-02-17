@@ -5,7 +5,7 @@ import './App.css';
 import EntreeComponent from './EntreeComponent';
 import {searchWords, solution, weight,pickWord} from '../core/solutionWithWorker';
 import ResetButton from './ResetButton';
-import Checkbox from './Checkbox';
+//import Checkbox from './Checkbox';
 
 
 class App extends React.Component {
