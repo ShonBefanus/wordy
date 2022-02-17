@@ -2,13 +2,14 @@ import React from 'react';
 import SearchBar from "./SearchBar";
 import SearchedWord from "./SearchedWord";
 import './App.css';
-import {searchWords} from '../ressources/helper';
+//import {searchWords} from '../ressources/helper';
 import EntreeComponent from './EntreeComponent';
-import solution from '../ressources/solution';
+import {searchWords,solution, weight} from '../ressources/solutionWithWorker';
 import ResetButton from './ResetButton';
 
 class App extends React.Component {
     state = {
+        weight,
         suggestedWords: [],
         searchedWord: '',
         selectedWord: null,
@@ -19,28 +20,6 @@ class App extends React.Component {
 
     componentDidMount() {
         this.solution();
-        // const unsafeFavorite = localStorage.getItem('favorite');
-        // console.log(unsafeFavorite);
-        // try {
-        //     if (unsafeFavorite) {
-        //         const favorite = unsafeFavorite.split(',');
-        //         console.log(favorite);
-        //         this.setState({
-        //             favorite,
-        //             entries: favorite.map(word => {
-        //                 return {
-        //                     word,
-        //                     hint: [0, 0, 0, 0, 0]
-        //                 }
-        //             })
-        //         });
-        //     }
-        // } catch (e) {
-        // } finally {
-        //
-        // }
-
-
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -59,11 +38,10 @@ class App extends React.Component {
     }
 
     onSearchSubmit = async (searchedWord) => {
-
         this.setState({searchedWord});
-
-
     };
+
+
     onSelectWord = (word) => {
         const newEntries = [...this.state.entries, {
             word,
@@ -74,8 +52,9 @@ class App extends React.Component {
     };
 
     solution() {
-        const newSuggestion = solution(this.state.entries);
-        this.setState({suggestedWords: newSuggestion});
+        solution(this.state.entries).then((newSuggestion) => {
+            this.setState({suggestedWords: newSuggestion});
+        });
     };
 
     deleteEntree = (id) => {
@@ -97,7 +76,6 @@ class App extends React.Component {
     };
 
     onFavoriteClick = (id) => {
-        console.log(this);
         const word = this.state.entries[id].word;
         const favorite = this.state.favorite;
         const isFavorite = favorite.indexOf(word) !== -1;
@@ -135,8 +113,10 @@ class App extends React.Component {
 
         return (
             <div>
+                <div className="ui divider"/>
                 <ResetButton isActive={this.isResetActive()} onClick={this.onResetClick}/>
                 <h2 className="ui header title">Wee buddy</h2>
+                <div className="ui divider"/>
                 <SearchBar onSearchSubmit={this.onSearchSubmit}/>
                 <div className="ui two column grid">
                     <EntreeComponent
@@ -145,7 +125,11 @@ class App extends React.Component {
                         setActive={this.setActive}
                         onFavoriteClick={this.onFavoriteClick}
                     />
-                    <SearchedWord words={this.state.suggestedWords} selectedWord={this.onSelectWord}/>
+                    <SearchedWord
+                        words={this.state.suggestedWords}
+                        selectedWord={this.onSelectWord}
+                        weight={this.state.weight}
+                    />
                 </div>
 
             </div>
