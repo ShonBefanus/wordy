@@ -1,14 +1,6 @@
-import words from './wordsSorted.json';
-import wordsByWeigth from './wordsByWeight.json';
 
-const weight1 =[];
-wordsByWeigth.forEach((e)=> {
-    const {word, poid} = e;
 
-    weight1[word] = poid;
-} );
-
-export const searchWords = (word) => {
+const searchWords = (word, words) => {
     const result = [];
     words.forEach(w=>{
         if (w.indexOf(word)===0) result.push(w);
@@ -22,14 +14,14 @@ const removeLetter = (currentList, letter, i, elm)=>{
     if (count > 1){
         count = 0;
         elm.hint.forEach((hint,index)=>{
-           if (hint>0 && elm.word[index]===letter) count++;
+            if (hint>0 && elm.word[index]===letter) count++;
         });
     }else {
         count = 0;
     }
     const temp = [];
 
-        currentList.forEach((word)=>{
+    currentList.forEach((word)=>{
 
         switch (count) {
             case 0:if(word.indexOf(letter) === -1) temp.push(word);break;
@@ -45,17 +37,30 @@ const removeLetter = (currentList, letter, i, elm)=>{
 };
 
 const trunkLetter = (currentList, letter, i ) =>{
-    return currentList.filter(e=>e[i] === letter);
+    const temp = [];
+
+    currentList.forEach((word)=>{
+        if(word[i] === letter) {
+            temp.push(word);
+
+        }
+    });
+    return temp;
 };
 
 const filterLetter = (currentList, letter, i) => {
-    return currentList.filter(word=>(word.indexOf(letter) !== -1 && word[i] !== letter));
+    const temp = [];
+    currentList.forEach((word)=>{
+        if(word.indexOf(letter) !== -1 && word[i] !== letter)  temp.push(word);
+    });
+    return temp;
 };
 
 
-const solution = (entree) =>{
+const solution = (entree, words) =>{
     let currentList = [...words];
     entree.forEach((elm)=>{
+
         elm.hint.forEach((h,i)=>{
             switch (h) {
                 case 0: currentList = removeLetter(currentList, elm.word[i], i, elm );break;
@@ -67,19 +72,16 @@ const solution = (entree) =>{
     });
     return currentList;
 };
-const entree = [];
-entree[0] = {
-    word:'again',
-    hint:[1,0,0,0,0]
+
+
+onmessage = function(e) {
+    //console.log('Message received from main script');
+    let workerResult;
+    switch (e.data[0]) {
+        case 'solution': workerResult = solution(e.data[1], e.data[2]);break;
+        case 'searchWords': workerResult = searchWords(e.data[1], e.data[2]);break;
+        default: workerResult = [];break;
+    }
+    // console.log('Posting message back to main script');
+    postMessage(workerResult);
 };
-entree[1] = {
-    word:'suite',
-    hint:[1,0,0,0,2]
-};
-
-
-export  default solution;
-
-export const weight = weight1;
-
-

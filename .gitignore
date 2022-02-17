@@ -12,7 +12,7 @@
 /build
 .idea/
 
-src/ressources/books/library
+src/ressources
 
 # misc
 .DS_Store

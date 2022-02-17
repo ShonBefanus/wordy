@@ -2,7 +2,7 @@ import React from 'react';
 import WordItem from './WordItem';
 
 
-const SearchedWord = ({words, selectedWord, weight}) => {
+const SearchedWord = ({words, selectedWord, weight, isGameMode}) => {
     const color = (word) =>{
         const w = weight[word];
         if(w>800) return 'green';
@@ -12,6 +12,7 @@ const SearchedWord = ({words, selectedWord, weight}) => {
         if(w>50) return 'brown';
         return 'lightgrey';
     };
+
     const renderList = words.slice(0,500).map((word, index) => {
         return <WordItem color={color(word)} weight={weight[word]}
             selectedWord={selectedWord}
@@ -20,9 +21,9 @@ const SearchedWord = ({words, selectedWord, weight}) => {
     });
     return (
         <div className="column">
-            <div className="ui right aligned container">
+            <div className="ui left aligned container">
                 <div className="column">
-                    {renderList}
+                    {words.length === 0 ? <div style={{float:'left'}}>No results</div> :renderList}
                 </div>
             </div>
         </div>

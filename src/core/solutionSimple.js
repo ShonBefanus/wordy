@@ -1,6 +1,7 @@
+import {words, weight as weight1} from './words';
 
 
-const searchWords = (word, words) => {
+export const searchWords = (word) => {
     const result = [];
     words.forEach(w=>{
         if (w.indexOf(word)===0) result.push(w);
@@ -37,30 +38,17 @@ const removeLetter = (currentList, letter, i, elm)=>{
 };
 
 const trunkLetter = (currentList, letter, i ) =>{
-    const temp = [];
-
-    currentList.forEach((word)=>{
-        if(word[i] === letter) {
-           temp.push(word);
-
-        }
-    });
-    return temp;
+    return currentList.filter(e=>e[i] === letter);
 };
 
 const filterLetter = (currentList, letter, i) => {
-    const temp = [];
-    currentList.forEach((word)=>{
-        if(word.indexOf(letter) !== -1 && word[i] !== letter)  temp.push(word);
-    });
-    return temp;
+    return currentList.filter(word=>(word.indexOf(letter) !== -1 && word[i] !== letter));
 };
 
 
-const solution = (entree, words) =>{
+const solution = (entree) =>{
     let currentList = [...words];
     entree.forEach((elm)=>{
-
         elm.hint.forEach((h,i)=>{
             switch (h) {
                 case 0: currentList = removeLetter(currentList, elm.word[i], i, elm );break;
@@ -72,21 +60,19 @@ const solution = (entree, words) =>{
     });
     return currentList;
 };
-
-
-onmessage = function(e) {
-     //console.log('Message received from main script');
-    let workerResult;
-    switch (e.data[0]) {
-        case 'solution': workerResult = solution(e.data[1], e.data[2]);break;
-        case 'searchWords': workerResult = searchWords(e.data[1], e.data[2]);break;
-        default: workerResult = [];break;
-    }
-    // console.log('Posting message back to main script');
-    postMessage(workerResult);
+const entree = [];
+entree[0] = {
+    word:'again',
+    hint:[1,0,0,0,0]
+};
+entree[1] = {
+    word:'suite',
+    hint:[1,0,0,0,2]
 };
 
 
+export  default solution;
 
+export const weight = weight1;
 
 

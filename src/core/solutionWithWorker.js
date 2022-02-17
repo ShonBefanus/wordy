@@ -1,8 +1,8 @@
-import solutionSimple, {weight as weight1, searchWords as searchWords1} from './solution';
-import words from './wordsSorted';
+import solutionSimple, {searchWords as searchWords1} from './solutionSimple';
+import {words, weight as weight1} from './words';
 
 const getWorker = (() => {
-    const worker = window && window.Worker ? new window.Worker('worker.js') : null;
+    const worker = Worker  ? new Worker(new URL('./worker.js', import.meta.url)) : null;
     if (window)
         window.addEventListener('beforeunload ', () => {
             if (worker)
@@ -12,7 +12,6 @@ const getWorker = (() => {
 })();
 
 
-
 const callWorker = async (method, entree) =>
     new Promise(resolve => {
         const worker = getWorker();
@@ -20,12 +19,18 @@ const callWorker = async (method, entree) =>
             worker.onmessage = ((result) => {
                 resolve(result.data);
             });
-            worker.postMessage([method,entree, words]);
+            worker.postMessage([method, entree, words]);
         } else {
             switch (method) {
-                case 'searchWords': resolve(searchWords1(entree)); break;
-                case 'solution': resolve(solutionSimple(entree));break;
-                default: resolve(null);break;
+                case 'searchWords':
+                    resolve(searchWords1(entree));
+                    break;
+                case 'solution':
+                    resolve(solutionSimple(entree));
+                    break;
+                default:
+                    resolve(null);
+                    break;
             }
 
         }
@@ -34,4 +39,5 @@ const callWorker = async (method, entree) =>
 export const searchWords = (word) => callWorker('searchWords', word);
 export const solution = (entree) => callWorker('solution', entree);
 export const weight = weight1;
+export const pickWord = () => words[Math.round(Math.random()*1000)];
 

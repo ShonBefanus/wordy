@@ -15,21 +15,29 @@ class SearchBar extends React.Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevState.debouncedTerm !== this.state.debouncedTerm) {
-            this.props.onSearchSubmit(this.state.debouncedTerm);
-        }
-        if (prevState.term !== this.state.term) {
-            clearTimeout(this.timeoutId);
-            this.timeoutId = setTimeout(() => {
-                this.setState({debouncedTerm: this.state.term})
-            }, 500);
+        if(this.props.isGameMode){
+            if (prevState.term !== this.state.term && this.state.term.length===5) {
+                this.props.onSearchSubmit(this.state.term);
+            }
+        }else {
+            if (prevState.debouncedTerm !== this.state.debouncedTerm) {
+                this.props.onSearchSubmit(this.state.debouncedTerm);
+            }
+            if (prevState.term !== this.state.term) {
+                clearTimeout(this.timeoutId);
+                this.timeoutId = setTimeout(() => {
+                    this.setState({debouncedTerm: this.state.term})
+                }, 500);
+            }
         }
 
     }
 
     onInputChange = (event) => {
-        this.setState({term: event.target.value.toLowerCase()});
+        this.setState({term: event.target.value.trim().toLowerCase()});
     };
+
+    tip = () => this.props.isGameMode ? 'Type a word...':'Search words...';
 
     render() {
         return (
@@ -41,7 +49,7 @@ class SearchBar extends React.Component {
                 >
                     <div className="field">
 
-                        <input type="text" className="prompt" placeholder="Search words..."
+                        <input type="text" className="prompt" placeholder={this.tip()}
                                value={this.state.term}
                                onChange={this.onInputChange}
                         />

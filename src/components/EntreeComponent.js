@@ -3,7 +3,7 @@ import EraseButton from './EraseButton';
 import EntreeWord from './EntreeWord';
 import BookmarkButton from './BookmarkButton';
 
-const EntreeComponent = ({entries, deleteEntree, onFavoriteClick, setActive}) => {
+const EntreeComponent = ({entries, deleteEntree, onFavoriteClick, setActive, isGameMode}) => {
     const entree = entries.map((e, index) => {
 
         return (
@@ -13,20 +13,24 @@ const EntreeComponent = ({entries, deleteEntree, onFavoriteClick, setActive}) =>
                         <EntreeWord
                             word={e.word}
                             hint={e.hint}
-                            setActive={(letter) => { setActive(index, letter);}}
+                            setActive={(letter) => {
+                                setActive(index, letter);
+                            }}
                         />
                         <span className="trash"
 
                         >
-                        <EraseButton
-                            onClick={() => {deleteEntree(index)}}
-                            display={['inline-block', 'block']}
-
-                        />
-                        <BookmarkButton
-                            isActive={e.isFavorite}
-                            onClick={() => onFavoriteClick(index)}
-                        />
+                        {isGameMode ? null :
+                            <EraseButton
+                                onClick={() => {
+                                    deleteEntree(index)
+                                }}
+                                display={['inline-block', 'block']}
+                            />}
+                            <BookmarkButton
+                                isActive={e.isFavorite}
+                                onClick={() => onFavoriteClick(index)}
+                            />
                     </span>
                     </div>
                 </div>
