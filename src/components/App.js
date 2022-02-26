@@ -6,7 +6,7 @@ import EntreeComponent from './EntreeComponent';
 import {searchWords, solution, weight, pickWord} from '../core/solutionWithWorker';
 import ResetButton from './ResetButton';
 import Checkbox from './Checkbox';
-
+import config  from '../../package.json';
 
 class App extends React.Component {
     state = {
@@ -139,7 +139,7 @@ class App extends React.Component {
                     inactiveTitle="Search mode"
                     onChange={this.onModeChange}
                 />}
-                <h2 className="ui header title">Wee buddy</h2>
+                <h2 className="ui header title">Wee buddy <span style={{fontSize:'x-small'}}>{config.version}</span></h2>
                 <div className="ui divider"/>
                 <SearchBar
                     onSearchSubmit={this.onSearchSubmit}

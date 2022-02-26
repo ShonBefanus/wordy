@@ -1,6 +1,5 @@
 import {words, weight as weight1} from './words';
 
-
 export const searchWords = (word) => {
     const result = [];
     words.forEach(w=>{
